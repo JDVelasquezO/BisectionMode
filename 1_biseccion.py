@@ -1,4 +1,5 @@
 import math
+import importCsv
 
 a = 0
 b = 1
@@ -18,6 +19,7 @@ def printMsg (i, a, b, p, f):
     msg += f"\tValor de f(p): {f(p)}\n"
     msg += f"\tValor de f(b) x f(p): {f(a)*f(p)}\n"
     print(msg)
+    # importCsv.writeCSV(a, b, p, f)
 
 def bisection (a, b, tol, n):
     i = 1
