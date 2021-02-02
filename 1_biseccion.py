@@ -3,8 +3,8 @@ import math
 
 a = -2
 b = -1
-tol = pow(10, -2)
-n = 8
+tol = 10**-2
+n = 10
 dataIterations = []
 p_ant = 0
 
@@ -54,12 +54,11 @@ def bisection (a, b, tol, n):
         p = a + ((b - a) / 2)
         m = (b - a) / 2
         
+        fillDict(i, a, b, p, f, dataIteration)
+        
         if f(p) == 0 or m < tol:
             writeCSV(dataIterations)
             return 0
-        
-        fillDict(i, a, b, p, f, dataIteration)
-        
         i += 1
         res = f(a) * f(p)
         if res > 0:
