@@ -1,14 +1,15 @@
 import csv
 import math
 
-a = 0
-b = 1
+a = -2
+b = -1
 tol = pow(10, -2)
-n = 3
+n = 8
 dataIterations = []
+p_ant = 0
 
 def f (x):
-    return math.sqrt(x) - math.cos(x)
+    return (x**4) - 2*(x**3) - 4*(x**2) + 4*x + 4
 
 def printMsg (i, a, b, p, f):
     msg = f"Resultado {i}\n"
@@ -25,17 +26,26 @@ def writeCSV(datas):
     with open('bisection.csv', 'w', newline='') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=' ',
             quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        spamwriter.writerow(['n', 'a', 'b', 'p', 'f(p)'])
+        spamwriter.writerow(['n', 'a', 'b', 'p', 'f(a)', 'f(b)', 
+            'f(p)', 'f(a)*f(p)', 'error'])
+        
         for d in datas:
-            spamwriter.writerow([d["i"], d["a"], d["b"], d["p"], d["f"]])
+            spamwriter.writerow([d["i"], d["a"], d["b"], d["p"], d["fa"],
+                d["fb"], d["fp"], d["fap"], d["err"]])
 
 def fillDict(i, a, b, p, f, dataIteration):
+    global p_ant
     dataIteration["i"] = i
     dataIteration["a"] = a
     dataIteration["b"] = b
     dataIteration["p"] = p
-    dataIteration["f"] = f(p)
+    dataIteration["fa"] = f(a)
+    dataIteration["fb"] = f(b)
+    dataIteration["fp"] = f(p)
+    dataIteration["fap"] = f(a) * f(p)
+    dataIteration["err"] = abs(p - p_ant)
     dataIterations.append(dataIteration)
+    p_ant = p
 
 def bisection (a, b, tol, n):
     i = 1
@@ -45,8 +55,8 @@ def bisection (a, b, tol, n):
         m = (b - a) / 2
         
         if f(p) == 0 or m < tol:
-            writeCSV(dataIteration)
-            return f"Todo bien, el numero es {p}"
+            writeCSV(dataIterations)
+            return 0
         
         fillDict(i, a, b, p, f, dataIteration)
         
@@ -57,6 +67,6 @@ def bisection (a, b, tol, n):
         else:
             b = p
     writeCSV(dataIterations)
-    return "No se llego al resultado"
+    return 1
 
 print(bisection(a, b, tol, n))
