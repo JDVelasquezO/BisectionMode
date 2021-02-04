@@ -1,15 +1,15 @@
 import csv
 import math
 
-a = -2
-b = -1
+a = 3.2
+b = 4
 tol = 10**-2
-n = 10
+n = 50
 dataIterations = []
 p_ant = 0
 
 def f (x):
-    return (x**4) - 2*(x**3) - 4*(x**2) + 4*x + 4
+    return (x**3) - 7*(x**2) + 14*x - 6
 
 def printMsg (i, a, b, p, f):
     msg = f"Resultado {i}\n"
@@ -43,7 +43,7 @@ def fillDict(i, a, b, p, f, dataIteration):
     dataIteration["fb"] = f(b)
     dataIteration["fp"] = f(p)
     dataIteration["fap"] = f(a) * f(p)
-    dataIteration["err"] = abs(p - p_ant)
+    dataIteration["err"] = abs((b - a)/2)
     dataIterations.append(dataIteration)
     p_ant = p
 
